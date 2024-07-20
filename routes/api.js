@@ -8,6 +8,9 @@
 
 'use strict';
 
+const { default: mongoose } = require("mongoose");
+const BookSchema = require("../db_schema");
+
 module.exports = function (app) {
 
   app.route('/api/books')
@@ -16,9 +19,24 @@ module.exports = function (app) {
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
     })
     
-    .post(function (req, res){
+    .post(async function (req, res){
       let title = req.body.title;
-      //response will contain new book object including atleast _id and title
+
+      if (!title) {
+        return res.json( "missing required field title" );
+      };
+
+      const Book = mongoose.model('Book', BookSchema);
+
+      try {
+        const newBook = new Book({
+          title
+        });
+        const savedBook = await newBook.save();
+        res.json(savedBook);
+      } catch (err) {
+        res.json({ error: err });
+      }
     })
     
     .delete(function(req, res){
