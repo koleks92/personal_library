@@ -8,6 +8,7 @@ require('dotenv').config();
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
+const db_connection = require('./db_connection.js');
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Database connection
+db_connection()
 
 //Index page (static HTML)
 app.route('/')
