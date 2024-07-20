@@ -61,7 +61,6 @@ module.exports = function (app) {
 
       try {
         const book = await Book.findById(bookid);
-        console.log(book);
         if (!book) {
           return res.json("no book exists")
         }
@@ -94,7 +93,7 @@ module.exports = function (app) {
         const updatedBook = await book.save()
         res.json(updatedBook);
       } catch (err) {
-        res.json({ error: err });
+        res.json("no book exists");
       }
     })
     
