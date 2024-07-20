@@ -2,15 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const BookSchema = new Schema({
-    title: { type: String, required: true },
+    comments: [],
+    title: { type: String, required: true},
+    commentcount: { type: Number, default: 0}
   });
 
-const CommentsSchema = new Schema({
-    comments: [],
-    _id: { type: String, required: true},
-    title: { type: String, required: true},
-    commentcount: { type: Number, required: true}
-})
-
-module.exports = CommentsSchema;
 module.exports = BookSchema;
