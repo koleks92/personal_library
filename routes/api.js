@@ -61,12 +61,13 @@ module.exports = function (app) {
 
       try {
         const book = await Book.findById(bookid);
+        console.log(book);
         if (!book) {
           return res.json("no book exists")
         }
         res.json(book);
       } catch (err) {
-        res.json({error: err})
+        res.json("no book exists")
       }
     })
     
