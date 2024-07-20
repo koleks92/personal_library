@@ -13,10 +13,16 @@ const BookSchema = require("../db_schema");
 
 module.exports = function (app) {
 
+  const Book = mongoose.model('Book', BookSchema);
+
   app.route('/api/books')
-    .get(function (req, res){
+    .get(async function (req, res){
       //response will be array of book objects
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
+      const books = await Book.find();
+
+      res.json(books);
+      
     })
     
     .post(async function (req, res){
@@ -26,7 +32,6 @@ module.exports = function (app) {
         return res.json( "missing required field title" );
       };
 
-      const Book = mongoose.model('Book', BookSchema);
 
       try {
         const newBook = new Book({
