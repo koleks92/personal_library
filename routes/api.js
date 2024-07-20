@@ -109,7 +109,7 @@ module.exports = function (app) {
         const deletedBook = book.deleteOne();
         res.json("delete successful")
       } catch (err) {
-        res.json({ error: err })
+        res.json("no book exists")
       }
 
 
