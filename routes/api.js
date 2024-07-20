@@ -19,10 +19,12 @@ module.exports = function (app) {
     .get(async function (req, res){
       //response will be array of book objects
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-      const books = await Book.find();
-
-      res.json(books);
-      
+      try {
+        const books = await Book.find();
+        res.json(books);
+      } catch (err) {
+        res.json({ error: err });
+      }
     })
     
     .post(async function (req, res){
@@ -31,7 +33,6 @@ module.exports = function (app) {
       if (!title) {
         return res.json( "missing required field title" );
       };
-
 
       try {
         const newBook = new Book({
@@ -45,9 +46,8 @@ module.exports = function (app) {
     })
     
     .delete(function(req, res){
-      //if successful response will be 'complete delete successful'
+      
     });
-
 
 
   app.route('/api/books/:id')
